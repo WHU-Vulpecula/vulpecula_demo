@@ -8,7 +8,7 @@ class SignUpApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => const SignUpScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
+        '/success': (context) => const WelcomeScreen(),
       },
     );
   }
@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
+        child: Text("注册成功！", style: Theme.of(context).textTheme.headline2),
       ),
     );
   }
@@ -54,18 +54,16 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final _firstNameTextController = TextEditingController();
-  final _lastNameTextController = TextEditingController();
-  final _usernameTextController = TextEditingController();
+  final _UserNameTextController = TextEditingController();
+  final _PasswordTextController = TextEditingController();
 
   double _formProgress = 0;
 
   void _updateFormProgress() {
     var progress = 0.0;
     final controllers = [
-      _firstNameTextController,
-      _lastNameTextController,
-      _usernameTextController
+      _UserNameTextController,
+      _PasswordTextController,
     ];
 
     for (final controller in controllers) {
@@ -80,7 +78,7 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   void _showWelcomeScreen() {
-    Navigator.of(context).pushNamed('/welcome');
+    Navigator.of(context).pushNamed('/success');
   }
 
   @override
@@ -91,26 +89,19 @@ class _SignUpFormState extends State<SignUpForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           LinearProgressIndicator(value: _formProgress),
-          Text('Sign up', style: Theme.of(context).textTheme.headline4),
+          Text('登录', style: Theme.of(context).textTheme.headline4),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
-              controller: _firstNameTextController,
-              decoration: const InputDecoration(hintText: 'First name'),
+              controller: _UserNameTextController,
+              decoration: const InputDecoration(hintText: '用户名'),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
-              controller: _lastNameTextController,
-              decoration: const InputDecoration(hintText: 'Last name'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _usernameTextController,
-              decoration: const InputDecoration(hintText: 'Username'),
+              controller: _PasswordTextController,
+              decoration: const InputDecoration(hintText: '密码'),
             ),
           ),
           TextButton(
@@ -129,7 +120,7 @@ class _SignUpFormState extends State<SignUpForm> {
               }),
             ),
             onPressed: _formProgress == 1 ? _showWelcomeScreen : null,
-            child: const Text('Sign up'),
+            child: const Text('登录'),
           ),
         ],
       ),
